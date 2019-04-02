@@ -85,9 +85,11 @@ var StompServer = function (config) {
       client: args.heartbeat[0],
       server: args.heartbeat[1]
     };
-    this.conf.debug('CONNECT', socket.sessionId, socket.clientHeartbeat, args.headers);
-    this.emit('connected', socket.sessionId, args.headers);
-    return true;
+    var headers = args.headers;
+    var valid = typeof this.conf.isValidConnection === 'function' ? this.conf.isValidConnection(headers) : true;
+    this.conf.debug('CONNECT', socket.sessionId, socket.clientHeartbeat, headers);
+    this.emit('connected', socket.sessionId, headers, valid);
+    return valid;
   };
 
   /**
