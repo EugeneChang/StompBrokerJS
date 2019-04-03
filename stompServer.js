@@ -170,6 +170,7 @@ var StompServer = function (config) {
       id: args.id,
       sessionId: socket.sessionId,
       topic: args.dest,
+      headers: args.headers,
       tokens: stompUtils.tokenizeDestination(args.dest),
       socket: socket
     };
